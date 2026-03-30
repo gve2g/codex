@@ -9,19 +9,19 @@
   --color-border: #E2E0DC;
   --color-surface: #F3F1ED;
 
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-source-serif-4);
-  --font-mono: var(--font-ibm-plex-mono);
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-serif);
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
