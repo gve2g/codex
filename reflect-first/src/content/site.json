@@ -1,0 +1,11 @@
+{
+  "name": "Reflect First",
+  "tagline": "Interactive case studies for technology policy education",
+  "contactEmail": "hello@reflectfirst.org",
+  "ctas": {
+    "primaryLabel": "Download a Sample Scenario",
+    "primaryHref": "/sample",
+    "secondaryLabel": "Book a Pilot Session",
+    "secondaryHref": "/book-pilot"
+  }
+}

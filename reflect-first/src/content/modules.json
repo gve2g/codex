@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "ai-governance",
+    "title": "AI Governance",
+    "positioning": "A case-based module on how governments, institutions, and organizations should respond to the risks and tradeoffs of AI.",
+    "description": "Case-based teaching on public risk, regulation, institutional decision-making, and contested AI futures.",
+    "audiences": ["Political Science", "Law", "Public Policy", "Senior Secondary"],
+    "formats": ["3-hour", "75-minute"],
+    "scenarios": ["Deepfakes", "Autonomous Weapons", "Algorithmic Decision-Making", "Public Sector AI"],
+    "included": ["Scenario briefs", "Facilitator guide", "Slide deck", "Evaluation rubric", "Pre/post assessments", "Student feedback tools"]
+  },
+  {
+    "slug": "future-of-work",
+    "title": "Future of Work",
+    "positioning": "A case-based module on automation, surveillance, credentialing, labour markets, and the political economy of AI-driven workplace change.",
+    "description": "Case-based teaching on automation, labour markets, workplace surveillance, credentialing, and the politics of technological change.",
+    "audiences": ["Business", "Economics", "Sociology", "Policy", "Career-oriented school programs"],
+    "formats": ["3-hour", "75-minute"],
+    "scenarios": ["Automation Clause", "Portfolio Career", "Remote Monitor", "Junior Associate", "UBI Pilot"],
+    "included": ["Scenario briefs", "Facilitator guide", "Slide deck", "Evaluation rubric", "Pre/post assessments", "Student feedback tools"]
+  }
+]
