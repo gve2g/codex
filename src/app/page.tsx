@@ -20,12 +20,12 @@ export default function Home() {
               </p>
               <hr className="mb-6 w-16 border-t border-accent" />
               <h1 id="hero-heading" className="max-w-3xl text-balance font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
-                Ready-to-deliver AI policy case studies for universities and schools
+                Role-based simulations for universities and schools
               </h1>
               <p className="mt-6 max-w-2xl text-lg text-muted">
-                Students take roles, review evidence, debate, and work toward
-                a recommendation on real questions about AI, work, and public
-                policy.
+                Students take on real-world roles, review evidence, debate
+                trade-offs, and work toward recommendations on timely issues
+                in public policy, technology, work, and society.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Button href="/book-pilot" variant="primary" size="lg">
