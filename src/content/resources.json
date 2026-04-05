@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Sample Scenario",
+    "type": "download",
+    "description": "Try a complete Case & Signal scenario brief. Includes the briefing pack, role assignments, and facilitator notes.",
+    "href": "/sample"
+  },
+  {
+    "title": "How to Teach Difficult Technology-Policy Debates",
+    "type": "article",
+    "description": "A guide to structured discussion on contested technology issues.",
+    "href": "#",
+    "comingSoon": true
+  },
+  {
+    "title": "Why AI Governance Belongs in the Classroom",
+    "type": "article",
+    "description": "The case for integrating AI governance into higher education curricula.",
+    "href": "#",
+    "comingSoon": true
+  },
+  {
+    "title": "Teaching the Future of Work Without Reducing It to Tools",
+    "type": "article",
+    "description": "Moving beyond tool-training to structural and political questions about work.",
+    "href": "#",
+    "comingSoon": true
+  }
+]

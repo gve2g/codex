@@ -1,0 +1,30 @@
+[
+  {
+    "title": "University License",
+    "description": "Annual institutional license with full teaching package for repeated use.",
+    "features": ["Full teaching package", "Facilitator guide", "Assessment tools", "Quarterly updates"],
+    "cta": "Contact for Pricing",
+    "href": "/contact"
+  },
+  {
+    "title": "School License",
+    "description": "Annual school license with adapted shorter-format materials and teacher-ready support.",
+    "features": ["Adapted 75-min materials", "Teacher guidance", "Assessment tools", "Quarterly updates"],
+    "cta": "Contact for Pricing",
+    "href": "/contact"
+  },
+  {
+    "title": "Module Bundle",
+    "description": "License Frontier Technologies + Public Policy and The Future of Work together at a discounted rate.",
+    "features": ["Both modules included", "Volume discount", "Unified teaching system"],
+    "cta": "Contact for Pricing",
+    "href": "/contact"
+  },
+  {
+    "title": "Direct Delivery / Pilot",
+    "description": "Live delivery by Case & Signal. Ideal for first-time institutions.",
+    "features": ["Expert facilitation", "Full materials included", "Post-session report"],
+    "cta": "Book a Pilot",
+    "href": "/book-pilot"
+  }
+]

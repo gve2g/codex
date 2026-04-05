@@ -1,0 +1,11 @@
+{
+  "name": "Case & Signal",
+  "tagline": "Case-based learning for the AI era",
+  "contactEmail": "hello@caseandsignal.com",
+  "ctas": {
+    "primaryLabel": "Download a Sample Scenario",
+    "primaryHref": "/sample",
+    "secondaryLabel": "Book a Pilot Session",
+    "secondaryHref": "/book-pilot"
+  }
+}

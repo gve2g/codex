@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "reflect-first",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["next", "dev"],
+      "port": 3000,
+      "autoPort": true,
+      "cwd": "C:/Users/geids/Downloads/Projects/Lane 2 - Ventures/UBC Poli 395/extracted_site/codex-claude-plan-reflect-first-website-Zpr04/reflect-first"
+    }
+  ]
+}
