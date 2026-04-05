@@ -1,12 +1,12 @@
 import Link from "next/link";
 const columns = [
   {
-    heading: "Platform",
+    heading: "Product",
     links: [
       { label: "Home", href: "/" },
       { label: "Modules", href: "/modules" },
       { label: "How It Works", href: "/how-it-works" },
-      { label: "Facilitator Training", href: "/certification" },
+      { label: "About", href: "/about" },
     ],
   },
   {
@@ -14,6 +14,7 @@ const columns = [
     links: [
       { label: "For Universities", href: "/for-universities" },
       { label: "For Schools", href: "/for-schools" },
+      { label: "For Organizations", href: "/contact" },
       { label: "Pricing", href: "/pricing" },
     ],
   },
@@ -22,7 +23,8 @@ const columns = [
     links: [
       { label: "Resources", href: "/resources" },
       { label: "Sample Scenario", href: "/sample" },
-      { label: "Book a Pilot", href: "/book-pilot" },
+      { label: "Facilitator Certification", href: "/certification" },
+      { label: "Book a Pilot Workshop", href: "/book-pilot" },
     ],
   },
   {

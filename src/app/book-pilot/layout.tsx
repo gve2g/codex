@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Book a Pilot Session | Case & Signal",
+  title: "Book a Pilot Workshop | Case & Signal",
   description:
-    "Book a facilitated pilot session to experience Case & Signal before committing to a license.",
+    "Book a facilitated pilot workshop to experience Case & Signal before committing to a license.",
 };
 
 export default function BookPilotLayout({

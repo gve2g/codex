@@ -36,8 +36,8 @@ export default function ForSchoolsPage() {
             <div>
               <SectionIntro
                 eyebrow="For schools: Grades 10, 11 &amp; 12"
-                title="The session your students won't stop talking about"
-                description="Case &amp; Signal puts high school students in the middle of real AI and technology decisions, as the policymaker, the business leader, the community advocate. Every scenario is age-appropriate, fits a standard timetable, and comes with everything you need to deliver it. Students research, debate, and work toward a recommendation together on issues that are in the news right now. They leave with skills they will carry into university and careers."
+                title="Case-based AI policy workshops for Grades 10–12"
+                description="Case &amp; Signal puts high school students in the middle of real AI and technology decisions, as the policymaker, the business leader, the community advocate. Every scenario is age-appropriate, fits a standard timetable, and comes with a complete digital teaching package. Students research, debate, and work toward a recommendation together on real policy questions."
               />
             </div>
             <SchoolScenarioCarousel />
@@ -375,12 +375,12 @@ export default function ForSchoolsPage() {
             </div>
             <div className="rounded border border-border bg-surface p-5">
               <h4 className="font-serif text-sm font-semibold">
-                Developed at a Top 30 global research university
+                Developed at UBC
               </h4>
               <p className="mt-1.5 text-xs text-muted">
-                The format has been used successfully in higher education
-                since 2021, then adapted for high school with the same
-                rigor and professional-quality materials.
+                The format was developed through AI policy workshops
+                facilitated at UBC since 2021, then adapted for high
+                school with the same rigor and professional-quality materials.
               </p>
             </div>
           </div>
@@ -389,7 +389,7 @@ export default function ForSchoolsPage() {
 
       <CTABand
         title="See it in action: book a pilot session for your class"
-        primaryLabel="Book a pilot session"
+        primaryLabel="Book a Pilot Workshop"
         primaryHref="/book-pilot"
         secondaryLabel="Download a sample scenario"
         secondaryHref="/sample"

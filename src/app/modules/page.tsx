@@ -6,15 +6,15 @@ import CTABand from "@/components/ui/CTABand";
 export const metadata: Metadata = {
   title: "Modules | Case & Signal",
   description:
-    "Structured debate modules on Frontier Technologies and Public Policy and The Future of Work. Built for live classroom delivery across universities, schools, and organizations.",
+    "Ready-to-run debate modules on Frontier Technologies and Public Policy and The Future of Work. Complete digital teaching packages for universities and schools.",
 };
 
 const frontierTechnologies = {
   title: "Frontier Technologies",
   positioning:
     "Who should control the rules for artificial intelligence? This module places students inside real regulatory dilemmas, from algorithmic bias in hiring to cross-border data sovereignty disputes. Participants must weigh competing interests, propose frameworks, and defend positions under pressure.",
-  audiences: ["University", "School", "Organization"],
-  formats: ["Half-day", "Full-day", "Multi-day", "Custom"],
+  audiences: ["University", "School"],
+  formats: ["75-minute", "Half-day", "Full-day", "Multi-day"],
   scenarios: [
     "A government weighs mandatory algorithmic impact assessments for public-sector AI",
     "A multinational faces conflicting data protection regulations across three jurisdictions",
@@ -43,8 +43,8 @@ const publicPolicyFutureOfWork = {
   title: "Public Policy and The Future of Work",
   positioning:
     "How should societies respond when technology reshapes employment? This module confronts students with workforce policy decisions that have no clean answers, from automation-driven displacement to the gig economy, universal basic income, and the role of retraining at scale.",
-  audiences: ["University", "School", "Organization"],
-  formats: ["Half-day", "Full-day", "Multi-day", "Custom"],
+  audiences: ["University", "School"],
+  formats: ["75-minute", "Half-day", "Full-day", "Multi-day"],
   scenarios: [
     "A national government debates a universal basic income pilot in response to automation",
     "A logistics company must decide whether to automate 40 percent of its warehouse workforce",
@@ -75,70 +75,72 @@ function ModuleSection({
   module: typeof frontierTechnologies;
 }) {
   return (
-    <div className="rounded border border-border bg-surface p-8 md:p-10">
-      <div className="mb-4 flex flex-wrap gap-2">
-        {module.audiences.map((a) => (
-          <span
-            key={a}
-            className="rounded bg-surface px-2 py-0.5 font-mono text-xs uppercase tracking-wide text-muted"
-          >
-            {a}
-          </span>
-        ))}
-        {module.formats.map((f) => (
-          <span
-            key={f}
-            className="rounded border border-border px-2 py-0.5 font-mono text-xs uppercase tracking-wide text-muted"
-          >
-            {f}
-          </span>
-        ))}
+    <div className="rounded-xl border border-border bg-surface p-8 md:p-10">
+      <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div>
+          <div className="mb-4 flex flex-wrap gap-2">
+            {module.audiences.map((a) => (
+              <span
+                key={a}
+                className="rounded-full bg-accent/10 px-3 py-0.5 font-mono text-xs uppercase tracking-wide text-accent"
+              >
+                {a}
+              </span>
+            ))}
+            {module.formats.map((f) => (
+              <span
+                key={f}
+                className="rounded-full border border-border px-3 py-0.5 font-mono text-xs uppercase tracking-wide text-muted"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+
+          <h3 className="mb-3 font-serif text-2xl">{module.title}</h3>
+          <p className="mb-6 max-w-2xl text-muted">{module.positioning}</p>
+
+          <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
+            What students debate
+          </h4>
+          <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
+            {module.scenarios.map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="space-y-6">
+          <div>
+            <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
+              What&apos;s included
+            </h4>
+            <ul className="space-y-2 text-sm text-foreground">
+              {module.included.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="mt-0.5 text-accent">&mdash;</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
+              Learning outcomes
+            </h4>
+            <ol className="list-inside list-decimal space-y-1.5 text-sm text-foreground">
+              {module.learningOutcomes.map((outcome) => (
+                <li key={outcome}>{outcome}</li>
+              ))}
+            </ol>
+          </div>
+
+          <Button variant="primary" href="/book-pilot">
+            Book a pilot workshop
+          </Button>
+        </div>
       </div>
-
-      <h3 className="mb-3 font-serif text-2xl">{module.title}</h3>
-      <p className="mb-6 max-w-3xl text-muted">{module.positioning}</p>
-
-      <div className="mb-6">
-        <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
-          Example scenarios from this module
-        </h4>
-        <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
-          {module.scenarios.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-        <p className="mt-3 text-sm italic text-muted">
-          New scenarios are added regularly. Contact us to discuss scenarios tailored to your program.
-        </p>
-      </div>
-
-      <div className="mb-8">
-        <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
-          What is included
-        </h4>
-        <ul className="list-inside list-disc space-y-2 text-sm text-foreground">
-          {module.included.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mb-8">
-        <h4 className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
-          Learning Outcomes
-        </h4>
-        <ol className="mt-3 list-inside list-decimal space-y-2">
-          {module.learningOutcomes.map((outcome) => (
-            <li key={outcome} className="text-sm text-foreground">
-              {outcome}
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <Button variant="primary" href="/book-pilot">
-        Book a pilot session
-      </Button>
     </div>
   );
 }
@@ -150,8 +152,8 @@ export default function ModulesPage() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionIntro
             eyebrow="Modules"
-            title="Modules built for live debate and real-world judgment"
-            description="Each module is a category of case-study challenges with a growing library of scenarios. Every scenario ships with everything an instructor needs: facilitator guides, student briefs, and assessment tools. Modules can be delivered as a half-day, full-day, or multi-day program to fit your schedule."
+            title="Ready-to-run modules built for live debate"
+            description="Each module is a complete digital teaching package with a growing library of scenarios. Every scenario includes facilitator guides, student briefs, and assessment tools."
             centered
           />
         </div>
@@ -165,7 +167,7 @@ export default function ModulesPage() {
       </section>
 
       <CTABand
-        title="License one module or build a broader program"
+        title="License one module or both"
         primaryLabel="View licensing options"
         primaryHref="/pricing"
         secondaryLabel="Get in touch"

@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 
 interface PricingBlockProps {
   title: string;
+  subtitle?: string;
   description: string;
   features?: string[];
   cta: string;
@@ -11,6 +12,7 @@ interface PricingBlockProps {
 
 export default function PricingBlock({
   title,
+  subtitle,
   description,
   features,
   cta,
@@ -27,6 +29,9 @@ export default function PricingBlock({
           </span>
         )}
       </div>
+      {subtitle && (
+        <p className="mt-1 text-sm font-medium text-accent">{subtitle}</p>
+      )}
       <p className="mt-3 text-muted">{description}</p>
       {features && features.length > 0 && (
         <ul className="mt-4 space-y-2">

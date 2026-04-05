@@ -27,26 +27,26 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://caseandsignal.netlify.app"),
-  title: "Case & Signal — AI Policy Case Studies for Universities and Schools",
+  title: "Case & Signal — Ready-to-Deliver AI Policy Case Studies",
   description:
-    "Case & Signal provides interactive case-study modules, facilitator support, and institutional licensing for teaching AI governance, the future of work, and related technology-policy issues.",
+    "Case & Signal provides ready-to-deliver case-study modules, facilitator support, and institutional licensing for teaching AI governance, the future of work, and related technology-policy issues.",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Case & Signal — AI Policy Case Studies for Universities and Schools",
+    title: "Case & Signal — Ready-to-Deliver AI Policy Case Studies",
     description:
-      "Interactive case-study modules for teaching AI governance, the future of work, and technology policy. Built for universities, schools, and organizations.",
+      "Ready-to-deliver case-study modules for teaching AI governance, the future of work, and technology policy. Built for universities and schools.",
     images: [{ url: "/logo.png", width: 1200, height: 630, alt: "Case & Signal" }],
     type: "website",
     siteName: "Case & Signal",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Case & Signal — AI Policy Case Studies for Universities and Schools",
+    title: "Case & Signal — Ready-to-Deliver AI Policy Case Studies",
     description:
-      "Interactive case-study modules for teaching AI governance, the future of work, and technology policy.",
+      "Ready-to-deliver case-study modules for teaching AI governance, the future of work, and technology policy.",
     images: ["/logo.png"],
   },
 };

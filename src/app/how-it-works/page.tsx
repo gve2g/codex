@@ -6,27 +6,27 @@ import CTABand from "@/components/ui/CTABand";
 export const metadata: Metadata = {
   title: "How It Works | Case & Signal",
   description:
-    "From choosing a format to measuring outcomes, here is how Case & Signal works for universities, schools, and organizations.",
+    "From choosing a module to delivering workshops, here is how Case & Signal works for universities and schools.",
 };
 
 const steps = [
   {
     number: 1,
-    title: "Choose your format",
+    title: "Choose a module or pilot",
     description:
-      "Case & Signal adapts to your institution and audience. Select the delivery model that fits your context.",
+      "Select the module and delivery model that fits your context.",
     items: [
-      "University integration — embed modules into existing courses or run standalone sessions",
-      "School program — age-appropriate, curriculum-aligned sessions designed for secondary students",
-      "Pilot session — a single facilitated session to evaluate the format before committing to a license",
-      "Facilitator-led delivery — book a Case & Signal facilitator to run the session directly",
+      "University integration — embed modules into existing courses or run standalone workshops",
+      "School program — age-appropriate, curriculum-aligned workshops designed for secondary students",
+      "Pilot workshop — a single facilitated workshop to evaluate the format before committing to a license",
+      "Facilitator-led delivery — book a Case & Signal facilitator to run the workshop directly",
     ],
   },
   {
     number: 2,
-    title: "Receive the teaching package",
+    title: "Receive the digital teaching package",
     description:
-      "Every module ships as a complete, ready-to-deliver package. There is no need to build materials from scratch.",
+      "Every module is delivered as a complete, ready-to-run teaching package. No need to build materials from scratch.",
     items: [
       "Facilitator guide with detailed session timings and prompts",
       "Student briefing packs with role assignments and evidence documents",
@@ -34,45 +34,19 @@ const steps = [
       "Slide deck for instructor-led delivery",
       "Assessment rubric aligned to critical thinking standards",
       "Post-session reflection worksheet",
-      "Digital access to all materials via the Case & Signal platform",
     ],
   },
   {
     number: 3,
-    title: "Deliver with confidence",
+    title: "Deliver with support",
     description:
-      "You control how sessions are delivered. We provide the structure and support.",
+      "You control how workshops are delivered. We provide the structure and support.",
     items: [
-      "Run sessions yourself using the facilitator guide and materials provided",
-      "Complete the facilitator training workshop for deeper preparation",
+      "Run workshops yourself using the facilitator guide and materials provided",
+      "Complete the facilitator certification workshop for deeper preparation",
       "Book a Case & Signal facilitator to deliver on your behalf",
       "Access onboarding support and pre-session briefings",
-    ],
-  },
-  {
-    number: 4,
-    title: "Measure and improve",
-    description:
-      "Every module includes built-in assessment tools so you can demonstrate impact and refine delivery over time.",
-    items: [
-      "Pre- and post-session assessments to measure shifts in reasoning and argumentation",
-      "Student self-reflection surveys",
-      "Facilitator observation rubrics",
-      "Evidence of learning outcomes for accreditation and reporting",
-      "Session feedback collection for continuous improvement",
-    ],
-  },
-  {
-    number: 5,
-    title: "Stay current",
-    description:
-      "Policy debates move quickly. Case & Signal materials are maintained and updated so your sessions remain relevant.",
-    items: [
-      "Quarterly content reviews and scenario updates",
-      "Versioned materials with clear changelogs",
-      "New modules released on a regular cadence",
-      "Notification of updates for all licensed institutions",
-      "Access to the latest version always included in your license",
+      "Built-in pre/post assessments to measure impact and refine delivery",
     ],
   },
 ];
@@ -84,8 +58,8 @@ export default function HowItWorksPage() {
         <div className="mx-auto max-w-6xl px-6">
           <SectionIntro
             eyebrow="How it works"
-            title="From setup to delivery in five steps"
-            description="Case & Signal is designed to be straightforward for institutions to adopt and for instructors to deliver. Here is the process from start to finish."
+            title="From setup to delivery in three steps"
+            description="Case & Signal is designed to be straightforward for institutions to adopt and for instructors to deliver."
             centered
           />
         </div>
@@ -99,7 +73,7 @@ export default function HowItWorksPage() {
 
       <CTABand
         title="Ready to see Case & Signal in action?"
-        primaryLabel="Book a pilot session"
+        primaryLabel="Book a Pilot Workshop"
         primaryHref="/book-pilot"
         secondaryLabel="View modules"
         secondaryHref="/modules"

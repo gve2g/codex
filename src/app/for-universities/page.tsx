@@ -67,8 +67,8 @@ export default function ForUniversitiesPage() {
             <div>
               <SectionIntro
                 eyebrow="For universities"
-                title="The session students rate highest on evaluations"
-                description="Case & Signal modules integrate into your existing courses and give students the one thing lectures and essays cannot: the experience of defending a position under challenge, in real time, with someone who disagrees. Students leave with sharper judgment, stronger communication skills, and the kind of engagement that shows up in course evaluations."
+                title="Structured AI policy workshops for university courses"
+                description="Case & Signal modules integrate into your existing courses and give students the experience of defending a position under challenge, in real time, with someone who disagrees. Complete digital teaching packages with facilitator guides, student briefs, and assessment tools."
               />
             </div>
             <UniversityScenarioCarousel />
@@ -179,7 +179,7 @@ export default function ForUniversitiesPage() {
               <footer className="mt-6 text-sm text-muted">
                 <strong className="text-foreground">Richard Price</strong>
                 <br />
-                Professor and Director of Graduate Studies, Top 30 Global Research University
+                Professor and Director of Graduate Studies, UBC
               </footer>
             </blockquote>
             <blockquote className="flex flex-col justify-between rounded-lg border border-border bg-background p-8">
@@ -219,7 +219,7 @@ export default function ForUniversitiesPage() {
 
       <CTABand
         title="Try it with your students: book a pilot session"
-        primaryLabel="Book a pilot session"
+        primaryLabel="Book a Pilot Workshop"
         primaryHref="/book-pilot"
         secondaryLabel="Download a sample scenario"
         secondaryHref="/sample"

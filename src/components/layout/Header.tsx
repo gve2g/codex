@@ -5,6 +5,7 @@ import Link from "next/link";
 const navLinks = [
   { label: "Modules", href: "/modules" },
   { label: "How It Works", href: "/how-it-works" },
+  { label: "About", href: "/about" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
 ];
@@ -64,10 +65,10 @@ export default function Header() {
             </Link>
           ))}
           <Link
-            href="/sample"
+            href="/book-pilot"
             className="ml-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-accent-light hover:shadow-md"
           >
-            Download Sample
+            Book a Pilot Workshop
           </Link>
         </nav>
 
@@ -117,11 +118,11 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/sample"
+              href="/book-pilot"
               className="mt-2 inline-block rounded-lg bg-accent px-5 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:bg-accent-light hover:shadow-md"
               onClick={() => setMobileOpen(false)}
             >
-              Download Sample
+              Book a Pilot Workshop
             </Link>
           </div>
         </nav>
