@@ -20,14 +20,16 @@ export default function AboutPage() {
               </p>
               <hr className="mb-6 w-16 border-t border-accent" />
               <h1 className="font-serif text-4xl leading-tight md:text-5xl">
-                Built by facilitators,
+                Built by <span className="text-accent">Practitioners</span>
                 <br />
-                not a software company
+                Advised by <span className="text-accent">Professors</span>
+                <br />
+                Made for <span className="text-accent">Students</span>
               </h1>
               <p className="mt-6 text-lg text-muted">
-                Case &amp; Signal was created by Greg Eidsness and Henry Han,
-                UBC Political Science alumni who have spent years facilitating
-                AI policy workshops in university classrooms.
+                Case &amp; Signal was created by Greg Eidsness and Henry Han
+                who have spent years facilitating policy workshops in
+                university classrooms.
               </p>
             </div>
 
