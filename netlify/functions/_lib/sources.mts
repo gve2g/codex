@@ -29,4 +29,10 @@ export const BULLETIN_SOURCES: SourceDefinition[] = [
   { id: "za-sars-customs", system: "za-sars-customs", adapter: "za_sars", url: "https://www.sars.gov.za/whats-new-at-sars/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" }
 ];
 
-export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES];
+export const REGIONAL_SOURCES: SourceDefinition[] = [
+  { id: "nz-customs-tsw", system: "nz-tsw", adapter: "nz_tsw", url: "https://www.customs.govt.nz/business/trade-single-window-tsw/current-tsw-status", pollMinutes: 15, parserVersion: "1", monitoringMode: "heartbeat" },
+  { id: "fr-delta-ie-import", system: "fr-delta-ie", adapter: "fr_delta_ie", url: "https://www.douane.gouv.fr/fiche/limportation-delta-ie-volet-import", pollMinutes: 30, parserVersion: "1", monitoringMode: "operations" },
+  { id: "hk-tsw-home", system: "hk-tsw", adapter: "hk_tsw", url: "https://www5.tradesinglewindow.hk/portal/?lang=en", pollMinutes: 30, parserVersion: "1", monitoringMode: "bulletin" }
+];
+
+export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES];
