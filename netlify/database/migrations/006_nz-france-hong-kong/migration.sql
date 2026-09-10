@@ -1,0 +1,29 @@
+INSERT INTO systems (id,name,short_name,country_code,country_name,region,authority,system_type,status,status_label,status_detail,signal_basis,confidence,timezone,official_url,last_checked_at,last_changed_at,freshness_minutes)
+VALUES ('nz-tsw','Trade Single Window','TSW','NZ','New Zealand','Asia-Pacific','New Zealand Customs Service','customs','operational','Operational','New Zealand Customs explicitly reports that TSW is operational and publishes maintenance windows on the same status page.','official_status','official','Pacific/Auckland','https://www.customs.govt.nz/business/trade-single-window-tsw/current-tsw-status','2026-09-10T04:30:00Z','2026-09-10T04:30:00Z',60)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO systems (id,name,short_name,country_code,country_name,region,authority,system_type,status,status_label,status_detail,signal_basis,confidence,timezone,official_url,last_checked_at,last_changed_at,freshness_minutes)
+VALUES ('fr-delta-ie','DELTA IE — Import','DELTA IE','FR','France','Europe','Direction générale des douanes et droits indirects','customs','degraded','Active technical anomalies','The official DELTA IE import anomaly journal dated 9 September 2026 lists technical anomalies still under treatment.','official_operations','official','Europe/Paris','https://www.douane.gouv.fr/fiche/limportation-delta-ie-volet-import','2026-09-10T04:30:00Z','2026-09-09T00:00:00Z',1440)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO systems (id,name,short_name,country_code,country_name,region,authority,system_type,status,status_label,status_detail,signal_basis,confidence,timezone,official_url,last_checked_at,last_changed_at,freshness_minutes)
+VALUES ('hk-tsw','Trade Single Window','TSW','HK','Hong Kong','Asia-Pacific','Hong Kong Customs and Excise Department','customs','clear','No system notice','The official Trade Single Window homepage currently displays No system notice.','official_notice','official','Asia/Hong_Kong','https://www5.tradesinglewindow.hk/portal/?lang=en','2026-09-10T04:30:00Z','2026-09-10T04:30:00Z',120)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO sources (id,system_id,name,url,adapter,source_tier,poll_interval_minutes,parser_version,monitoring_mode) VALUES
+('nz-customs-tsw','nz-tsw','New Zealand Customs — Current TSW status','https://www.customs.govt.nz/business/trade-single-window-tsw/current-tsw-status','nz_tsw',1,15,'1','heartbeat'),
+('fr-delta-ie-import','fr-delta-ie','French Customs — DELTA IE import anomaly journal','https://www.douane.gouv.fr/fiche/limportation-delta-ie-volet-import','fr_delta_ie',1,30,'1','operations'),
+('hk-tsw-home','hk-tsw','Hong Kong Trade Single Window homepage','https://www5.tradesinglewindow.hk/portal/?lang=en','hk_tsw',1,30,'1','bulletin')
+ON CONFLICT (id) DO UPDATE SET parser_version=EXCLUDED.parser_version, monitoring_mode=EXCLUDED.monitoring_mode, poll_interval_minutes=EXCLUDED.poll_interval_minutes;
+
+INSERT INTO events (id,system_id,country_code,country_name,region,event_type,status,severity,confidence,title,summary,operational_impact,workaround,starts_at,ends_at,resolved_at,all_day,source_name,source_url,source_tier,last_verified_at,recurrence,fingerprint)
+VALUES ('nz-tsw-sunday-maint-20260913','nz-tsw','NZ','New Zealand','Asia-Pacific','scheduled_maintenance','upcoming','moderate','official','Trade Single Window routine Sunday maintenance','New Zealand Customs publishes a routine TSW maintenance window every Sunday from 02:00 to 04:00 local time.','TSW may be unavailable during the routine maintenance period.','Plan time-sensitive lodgements outside the Sunday maintenance window.','2026-09-12T14:00:00Z','2026-09-12T16:00:00Z',NULL,FALSE,'New Zealand Customs Service — Current TSW status','https://www.customs.govt.nz/business/trade-single-window-tsw/current-tsw-status',1,'2026-09-10T04:30:00Z','FREQ=WEEKLY;BYDAY=SU','nz-tsw-sunday-maint-20260913')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO events (id,system_id,country_code,country_name,region,event_type,status,severity,confidence,title,summary,operational_impact,workaround,starts_at,ends_at,resolved_at,all_day,source_name,source_url,source_tier,last_verified_at,recurrence,fingerprint)
+VALUES ('nz-tsw-maint-202609131400','nz-tsw','NZ','New Zealand','Asia-Pacific','scheduled_maintenance','upcoming','limited','official','Trade Single Window scheduled maintenance','New Zealand Customs has scheduled TSW maintenance from 02:00 to 06:00 local time on 14 September. No outage is anticipated, but lodgement responses may be delayed.','Lodgement responses may be delayed during the published window.','Plan time-sensitive lodgements around the maintenance period.','2026-09-13T14:00:00Z','2026-09-13T18:00:00Z',NULL,FALSE,'New Zealand Customs Service — Current TSW status','https://www.customs.govt.nz/business/trade-single-window-tsw/current-tsw-status',1,'2026-09-10T04:30:00Z',NULL,'nz-tsw-maint-202609131400')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO events (id,system_id,country_code,country_name,region,event_type,status,severity,confidence,title,summary,operational_impact,workaround,starts_at,ends_at,resolved_at,all_day,source_name,source_url,source_tier,last_verified_at,recurrence,fingerprint)
+VALUES ('fr-delta-ie-active-anomalies','fr-delta-ie','FR','France','Europe','system_incident','active','moderate','official','DELTA IE active technical anomalies','French Customs currently lists DELTA IE import technical anomalies as still under treatment.','Some import declarations or release-related messages may require workarounds documented by French Customs.','Consult the official anomaly journal for the affected declaration flow and prescribed workaround.','2026-09-09T00:00:00Z',NULL,NULL,TRUE,'Direction générale des douanes — DELTA IE import anomaly journal','https://www.douane.gouv.fr/fiche/limportation-delta-ie-volet-import',1,'2026-09-10T04:30:00Z',NULL,'fr-delta-ie-active-anomalies')
+ON CONFLICT (id) DO NOTHING;
