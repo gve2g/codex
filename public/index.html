@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TradeStatus — Global trade disruptions and customs system status</title>
+  <meta name="description" content="A free public monitor for customs systems, port constraints and scheduled trade disruptions around the world, sourced from authoritative public notices." />
+  <meta name="theme-color" content="#101820" />
+  <meta property="og:title" content="TradeStatus — Global trade status, without the scavenger hunt" />
+  <meta property="og:description" content="See what is disrupting international trade now and what scheduled interruption is coming next." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://tradestatus-global.netlify.app/" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="TradeStatus home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>TradeStatus</span>
+        <span class="beta">BETA</span>
+      </a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#now">Now</a><a href="#calendar">Calendar</a><a href="#systems">Systems</a><a href="#coverage">Coverage</a>
+      </nav>
+      <div class="header-actions">
+        <button class="search-toggle" id="searchToggle" type="button" aria-label="Search TradeStatus">⌕ <span>Search</span></button>
+        <a class="button button-dark" href="/calendar.ics">Subscribe calendar</a>
+      </div>
+    </div>
+  </header>
+  <div class="search-panel" id="searchPanel" hidden>
+    <div class="shell search-inner">
+      <label for="globalSearch">Search systems, countries or incidents</label>
+      <div class="search-row"><input id="globalSearch" autocomplete="off" placeholder="Try Germany, customs, Rotterdam…" /><button id="searchClose" type="button" aria-label="Close search">Close</button></div>
+      <div id="searchResults" class="search-results" aria-live="polite"></div>
+    </div>
+  </div>
+  <main id="main">
+    <section class="hero" id="top"><div class="shell hero-grid"><div class="hero-copy">
+      <div class="eyebrow"><span class="live-dot"></span> Public trade infrastructure monitor</div>
+      <h1>What is disrupting trade now — and what is scheduled next.</h1>
+      <p class="dek">Customs systems, border-processing infrastructure and port operations, normalized from authoritative public sources into one status board and forward calendar.</p>
+      <div class="freshness" id="freshness"><span class="pulse"></span> Loading source status…</div>
+    </div><div class="hero-note"><div class="note-kicker">The rule</div><p><strong>Green means explicitly operational.</strong> “No active advisory” is shown separately when a source is a bulletin or schedule rather than a live heartbeat.</p><a href="#method">How status works →</a></div></div></section>
+    <section class="status-strip" aria-label="Global summary"><div class="shell metric-grid" id="metrics">
+      <div class="metric"><div class="metric-value skeleton">—</div><div class="metric-label">Major disruptions</div></div><div class="metric"><div class="metric-value skeleton">—</div><div class="metric-label">Active constraints</div></div><div class="metric"><div class="metric-value skeleton">—</div><div class="metric-label">Next 7 days</div></div><div class="metric"><div class="metric-value skeleton">—</div><div class="metric-label">Systems monitored</div></div>
+    </div></section>
+    <section class="section" id="now"><div class="shell"><div class="section-head"><div><div class="section-kicker">Happening now</div><h2>Active trade constraints</h2></div><div class="legend-inline"><span><i class="swatch major"></i> Major</span><span><i class="swatch moderate"></i> Moderate</span><span><i class="swatch limited"></i> Limited</span></div></div><div class="now-layout"><div id="activeEvents" class="incident-list" aria-live="polite"></div><aside class="next-panel" id="calendar"><div class="panel-head"><div><div class="section-kicker">Forward calendar</div><h3>Next 7 days</h3></div><button class="text-button" id="show30" type="button">30 days</button></div><div id="upcomingEvents" class="upcoming-list"></div><a class="calendar-link" href="/calendar.ics">+ Add calendar feed</a></aside></div></div></section>
+    <section class="section section-tint" id="systems"><div class="shell"><div class="section-head systems-head"><div><div class="section-kicker">System board</div><h2>Customs and trade infrastructure</h2></div><div class="filters" aria-label="System filters"><button class="filter active" data-filter="all" type="button">All</button><button class="filter" data-filter="customs" type="button">Customs</button><button class="filter" data-filter="port" type="button">Ports</button><button class="filter" data-filter="biosecurity" type="button">Biosecurity</button></div></div><div class="table-wrap"><table class="status-table"><thead><tr><th>Economy</th><th>System</th><th>Status</th><th>Signal</th><th>Verified</th><th><span class="sr-only">Open</span></th></tr></thead><tbody id="systemRows"></tbody></table></div></div></section>
+    <section class="section" id="resolved"><div class="shell"><div class="section-head"><div><div class="section-kicker">Recently resolved</div><h2>What returned to normal</h2></div></div><div id="resolvedEvents" class="resolved-grid"></div></div></section>
+    <section class="method" id="method"><div class="shell method-grid"><div><div class="section-kicker">Method</div><h2>Evidence before inference.</h2></div><div class="method-copy"><p>TradeStatus monitors public status pages, maintenance schedules and operational bulletins. Every item links to the underlying source and records when it was last checked.</p><p><strong>Operational</strong> is reserved for systems with an explicit health signal. <strong>No active advisory</strong> means the monitored public bulletin contains no current event; it is not treated as proof that every component is working.</p><p>Official government and port-authority sources are preferred. Secondary operational sources are clearly labelled when an authoritative machine-readable feed is not publicly available.</p></div></div></section>
+    <section class="coverage" id="coverage"><div class="shell coverage-grid"><div><div class="section-kicker light">Coverage</div><h2>Small by design. Expanding source by source.</h2><p id="coverageCopy">The launch monitor is loading its source registry.</p></div><div id="coverageList" class="coverage-list"></div></div></section>
+  </main>
+  <footer><div class="shell footer-grid"><div><strong>TradeStatus</strong><p>Free public trade infrastructure intelligence.</p></div><div class="footer-links"><a href="#method">Method</a><a href="/calendar.ics">Calendar feed</a><a href="/api/status">JSON API</a></div><div class="footer-note">Beta coverage is incomplete. Always consult the linked authority for operational decisions.</div></div></footer>
+  <dialog id="detailDialog" class="detail-dialog"><div class="dialog-card"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close details">×</button><div id="dialogContent"></div></div></dialog>
+  <dialog id="calendarDialog" class="calendar-dialog"><div class="dialog-card calendar-card"><button class="dialog-close" id="calendarClose" type="button" aria-label="Close calendar">×</button><div class="section-kicker">Forward calendar</div><h2>Next 30 days</h2><div id="calendar30" class="calendar30"></div><a class="button button-dark full" href="/calendar.ics">Subscribe to iCal feed</a></div></dialog>
+  <script src="/base.js" defer></script><script src="/render-detail.js" defer></script><script src="/render-list.js" defer></script><script src="/app.js" defer></script>
+</body>
+</html>
