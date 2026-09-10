@@ -108,6 +108,7 @@
             <button class="filter active" data-filter="all" type="button">All</button>
             <button class="filter" data-filter="customs" type="button">Customs</button>
             <button class="filter" data-filter="port" type="button">Ports</button>
+            <button class="filter" data-filter="canal" type="button">Canals</button>
             <button class="filter" data-filter="biosecurity" type="button">Biosecurity</button>
           </div>
         </div>
@@ -170,7 +171,7 @@
   <footer>
     <div class="shell footer-grid">
       <div><strong>TradeStatus</strong><p>Free public trade infrastructure intelligence.</p></div>
-      <div class="footer-links"><a href="#method">Method</a><a href="/calendar.ics">Calendar feed</a><a href="/api/status">JSON API</a></div>
+      <div class="footer-links"><a href="#method">Method</a><a href="/health.html">Source health</a><a href="/calendar.ics">Calendar feed</a><a href="/api/status">JSON API</a></div>
       <div class="footer-note">Beta coverage is incomplete. Always consult the linked authority for operational decisions.</div>
     </div>
   </footer>
@@ -192,6 +193,9 @@
     </div>
   </dialog>
 
+  <script src="/base.js" defer></script>
+  <script src="/render-detail.js" defer></script>
+  <script src="/render-list.js" defer></script>
   <script src="/app.js" defer></script>
 </body>
 </html>
