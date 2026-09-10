@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tradestatus-global.netlify.app/sitemap.xml

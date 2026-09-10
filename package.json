@@ -1,0 +1,11 @@
+{
+  "name": "tradestatus-global",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Public global trade disruption status and forward calendar.",
+  "dependencies": {
+    "@netlify/database": "latest",
+    "@netlify/functions": "latest"
+  }
+}
