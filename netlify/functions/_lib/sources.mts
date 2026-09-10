@@ -21,7 +21,12 @@ export const SOURCES: SourceDefinition[] = [
   { id: "jp-naccs-news", system: "jp-naccs", adapter: "jp_naccs", url: "https://www.naccs.jp/news/news.html", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
   { id: "kr-unipass-notices", system: "kr-unipass", adapter: "kr_unipass", url: "https://tunipass.customs.go.kr/rip/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
   { id: "in-icegate-home", system: "in-icegate", adapter: "in_icegate", url: "https://www.icegate.gov.in/", pollMinutes: 30, parserVersion: "1", monitoringMode: "bulletin" },
-  { id: "br-siscomex-systems", system: "br-siscomex", adapter: "br_siscomex", url: "https://www.gov.br/siscomex/pt-br/noticias/noticias-siscomex-sistemas", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
-  { id: "za-sars-customs", system: "za-sars-customs", adapter: "za_sars", url: "https://www.sars.gov.za/whats-new-at-sars/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
   { id: "c4t-status", system: "be-idms", adapter: "c4t_status", url: "https://status.customs4trade.com/", pollMinutes: 30, parserVersion: "2", monitoringMode: "secondary" }
 ];
+
+export const BULLETIN_SOURCES: SourceDefinition[] = [
+  { id: "br-siscomex-systems", system: "br-siscomex", adapter: "br_siscomex", url: "https://www.gov.br/siscomex/pt-br/noticias/noticias-siscomex-sistemas", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
+  { id: "za-sars-customs", system: "za-sars-customs", adapter: "za_sars", url: "https://www.sars.gov.za/whats-new-at-sars/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" }
+];
+
+export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES];
