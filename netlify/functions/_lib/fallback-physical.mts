@@ -1,0 +1,14 @@
+export const fallbackPhysical = {
+  schema_version: 1,
+  systems: [
+    { id:"tr-turkish-straits",name:"Turkish Straits",short_name:"Turkish Straits",country_code:"TR",country_name:"Türkiye",region:"Europe",authority:"Directorate General of Coastal Safety",system_type:"strait",status:"clear",status_label:"Traffic windows published",status_detail:"The official Turkish Straits traffic service publishes open and suspended transit windows for the Istanbul and Çanakkale straits.",signal_basis:"official_operations",confidence:"official",timezone:"Europe/Istanbul",official_url:"https://www.kiyiemniyeti.gov.tr/strait_traffic",last_checked_at:"2026-09-10T05:30:00Z",last_changed_at:"2026-09-10T05:30:00Z",freshness_minutes:45 },
+    { id:"eg-suez-canal",name:"Suez Canal",short_name:"Suez Canal",country_code:"EG",country_name:"Egypt",region:"Middle East & Africa",authority:"Suez Canal Authority",system_type:"canal",status:"clear",status_label:"Navigation operating",status_detail:"Recent official Suez Canal Authority navigation updates show canal traffic continuing; this is bulletin monitoring rather than a continuous operational heartbeat.",signal_basis:"official_operations",confidence:"official",timezone:"Africa/Cairo",official_url:"https://www.suezcanal.gov.eg/English/pages/default.aspx?lang=en",last_checked_at:"2026-09-10T05:30:00Z",last_changed_at:"2026-08-22T00:00:00Z",freshness_minutes:43200 },
+    { id:"us-commercial-borders",name:"U.S. Commercial Border Wait Times",short_name:"U.S. Border Waits",country_code:"US",country_name:"United States",region:"Americas",authority:"U.S. Customs and Border Protection",system_type:"border",status:"unknown",status_label:"Awaiting live check",status_detail:"CBP publishes current commercial-vehicle wait times and lane availability for land ports of entry on the Canadian and Mexican borders.",signal_basis:"official_operations",confidence:"official",timezone:"America/New_York",official_url:"https://bwt.cbp.gov/ViewAllPorts",last_checked_at:null,last_changed_at:null,freshness_minutes:45 }
+  ],
+  events: [],
+  sources: [
+    { id:"tr-straits-traffic",system_id:"tr-turkish-straits",name:"Turkish Straits traffic direction",url:"https://www.kiyiemniyeti.gov.tr/strait_traffic",adapter:"tr_straits",source_tier:1,poll_interval_minutes:15,parser_version:"1",monitoring_mode:"operations" },
+    { id:"eg-suez-navigation",system_id:"eg-suez-canal",name:"Suez Canal Authority navigation and news",url:"https://www.suezcanal.gov.eg/English/pages/default.aspx?lang=en",adapter:"eg_suez",source_tier:1,poll_interval_minutes:60,parser_version:"1",monitoring_mode:"bulletin" },
+    { id:"us-cbp-bwt",system_id:"us-commercial-borders",name:"CBP Border Wait Times — commercial vehicles",url:"https://bwt.cbp.gov/ViewAllPorts",adapter:"us_bwt",source_tier:1,poll_interval_minutes:15,parser_version:"1",monitoring_mode:"operations" }
+  ]
+} as const;

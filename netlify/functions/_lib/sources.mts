@@ -44,4 +44,10 @@ export const CALENDAR_SOURCES: SourceDefinition[] = [
   { id: "ca-cbsa-scheduled", system: "ca-cbsa-commercial", adapter: "ca_cbsa_schedule", url: "https://www.canada.ca/en/border-services-agency/services/electronic-data-interchange/edi-resources-technical-support/scheduled-outages.html", pollMinutes: 360, parserVersion: "1", monitoringMode: "schedule" }
 ];
 
-export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES, ...ASIA_SOURCES, ...CALENDAR_SOURCES];
+export const PHYSICAL_SOURCES: SourceDefinition[] = [
+  { id: "tr-straits-traffic", system: "tr-turkish-straits", adapter: "tr_straits", url: "https://www.kiyiemniyeti.gov.tr/strait_traffic", pollMinutes: 15, parserVersion: "1", monitoringMode: "operations" },
+  { id: "eg-suez-navigation", system: "eg-suez-canal", adapter: "eg_suez", url: "https://www.suezcanal.gov.eg/English/pages/default.aspx?lang=en", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" },
+  { id: "us-cbp-bwt", system: "us-commercial-borders", adapter: "us_bwt", url: "https://bwt.cbp.gov/ViewAllPorts", pollMinutes: 15, parserVersion: "1", monitoringMode: "operations" }
+];
+
+export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES, ...ASIA_SOURCES, ...CALENDAR_SOURCES, ...PHYSICAL_SOURCES];
