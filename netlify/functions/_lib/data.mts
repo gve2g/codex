@@ -1,6 +1,8 @@
 import { getDatabase } from "@netlify/database";
 import { fallbackData } from "./fallback.mts";
 import { fallbackExpansion } from "./fallback-expansion.mts";
+import { fallbackCalendar } from "./fallback-calendar.mts";
+import { fallbackAsia } from "./fallback-asia.mts";
 
 function mergeById(base: readonly any[], extra: readonly any[]) {
   const map = new Map<string, any>();
@@ -9,9 +11,9 @@ function mergeById(base: readonly any[], extra: readonly any[]) {
 }
 
 function mergedFallback() {
-  const systems = mergeById(fallbackData.systems as readonly any[], fallbackExpansion.systems as readonly any[]);
-  const events = mergeById(fallbackData.events as readonly any[], fallbackExpansion.events as readonly any[]);
-  const sources = mergeById((fallbackData.sources || []) as readonly any[], fallbackExpansion.sources as readonly any[]);
+  const systems = mergeById(mergeById(mergeById(fallbackData.systems as readonly any[], fallbackExpansion.systems as readonly any[]), fallbackAsia.systems as readonly any[]), fallbackCalendar.systems as readonly any[]);
+  const events = mergeById(mergeById(mergeById(fallbackData.events as readonly any[], fallbackExpansion.events as readonly any[]), fallbackAsia.events as readonly any[]), fallbackCalendar.events as readonly any[]);
+  const sources = mergeById(mergeById(mergeById((fallbackData.sources || []) as readonly any[], fallbackExpansion.sources as readonly any[]), fallbackAsia.sources as readonly any[]), fallbackCalendar.sources as readonly any[]);
   return {
     ...fallbackData,
     coverage: {
@@ -42,49 +44,26 @@ export function lifecycle(event: any, now = new Date()): "active" | "upcoming" |
 }
 
 function normalizeEvent(row: any, now: Date) {
-  return {
-    ...row,
-    starts_at: iso(row.starts_at),
-    ends_at: iso(row.ends_at),
-    resolved_at: iso(row.resolved_at),
-    last_verified_at: iso(row.last_verified_at),
-    status: lifecycle(row, now),
-    all_day: Boolean(row.all_day)
-  };
+  return { ...row, starts_at: iso(row.starts_at), ends_at: iso(row.ends_at), resolved_at: iso(row.resolved_at), last_verified_at: iso(row.last_verified_at), status: lifecycle(row, now), all_day: Boolean(row.all_day) };
 }
-
-function normalizeSystem(row: any) {
-  return {
-    ...row,
-    last_checked_at: iso(row.last_checked_at),
-    last_changed_at: iso(row.last_changed_at),
-    freshness_minutes: Number(row.freshness_minutes || 1440)
-  };
-}
-
+function normalizeSystem(row: any) { return { ...row, last_checked_at: iso(row.last_checked_at), last_changed_at: iso(row.last_changed_at), freshness_minutes: Number(row.freshness_minutes || 1440) }; }
 function expandRecurringEvents(events: any[], now: Date) {
-  const floor = now.getTime() - 21 * 86400000;
-  const ceiling = now.getTime() + 60 * 86400000;
-  const output: any[] = [];
+  const floor = now.getTime() - 21 * 86400000, ceiling = now.getTime() + 60 * 86400000, output: any[] = [];
   for (const event of events) {
     if (event.recurrence !== "FREQ=WEEKLY;BYDAY=SU") { output.push(event); continue; }
-    const baseStart = new Date(event.starts_at).getTime();
-    const duration = event.ends_at ? new Date(event.ends_at).getTime() - baseStart : 0;
+    const baseStart = new Date(event.starts_at).getTime(), duration = event.ends_at ? new Date(event.ends_at).getTime() - baseStart : 0;
     for (let start = baseStart, n = 0; start <= ceiling; start += 7 * 86400000, n += 1) {
-      const end = duration ? start + duration : null;
-      if ((end || start) < floor) continue;
+      const end = duration ? start + duration : null; if ((end || start) < floor) continue;
       output.push({ ...event, id: `${event.id}-r${n}`, starts_at: new Date(start).toISOString(), ends_at: end ? new Date(end).toISOString() : null, resolved_at: null, recurrence: null, recurrence_source: event.id });
     }
   }
   return output;
 }
-
 function deriveSystemStatus(system: any, events: any[], now: Date) {
-  const checked = system.last_checked_at ? new Date(system.last_checked_at).getTime() : 0;
-  const freshnessMs = Number(system.freshness_minutes || 1440) * 60000;
+  const checked = system.last_checked_at ? new Date(system.last_checked_at).getTime() : 0, freshnessMs = Number(system.freshness_minutes || 1440) * 60000;
   if (!checked || now.getTime() - checked > freshnessMs) return { ...system, status: "unknown", status_label: "Status unavailable", status_detail: "The monitored source is stale or outside its freshness window." };
   const active = events.filter((event) => {
-    if (event.system_id !== system.id || lifecycle(event, now) !== "active") return false;
+    if (event.system_id !== system.id || event.severity === "info" || lifecycle(event, now) !== "active") return false;
     if (!event.last_verified_at) return true;
     return now.getTime() - new Date(event.last_verified_at).getTime() <= freshnessMs;
   });
@@ -95,10 +74,8 @@ function deriveSystemStatus(system: any, events: any[], now: Date) {
   if (top.severity === "major") return { ...system, status: "outage", status_label: "Major disruption", status_detail: top.summary };
   return { ...system, status: "degraded", status_label: "Operational constraint", status_detail: top.summary };
 }
-
 function summarize(systems: any[], events: any[], now: Date) {
-  const active = events.filter((e) => lifecycle(e, now) === "active");
-  const seven = new Date(now.getTime() + 7 * 86400000);
+  const active = events.filter((e) => lifecycle(e, now) === "active" && e.severity !== "info"), seven = new Date(now.getTime() + 7 * 86400000);
   const upcoming7 = events.filter((e) => { const start = new Date(e.starts_at); return lifecycle(e, now) === "upcoming" && start <= seven; });
   return { active_major: active.filter((e) => e.severity === "major").length, active_constraints: active.length, upcoming_7d: upcoming7.length, monitored_systems: systems.length };
 }
