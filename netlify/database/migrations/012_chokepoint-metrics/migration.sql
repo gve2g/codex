@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS chokepoint_metrics (
+  system_id TEXT NOT NULL REFERENCES systems(id) ON DELETE CASCADE,
+  source_id TEXT NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
+  observed_date DATE NOT NULL,
+  latest_total NUMERIC NOT NULL,
+  avg_7d NUMERIC NOT NULL,
+  seasonal_reference NUMERIC NOT NULL,
+  pct_reference NUMERIC NOT NULL,
+  band TEXT NOT NULL,
+  recorded_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (system_id, source_id, observed_date)
+);
+CREATE INDEX IF NOT EXISTS idx_chokepoint_metrics_latest ON chokepoint_metrics(system_id, observed_date DESC);
+
+INSERT INTO systems (id,name,short_name,country_code,country_name,region,authority,system_type,status,status_label,status_detail,signal_basis,confidence,timezone,official_url,last_checked_at,last_changed_at,freshness_minutes) VALUES
+('int-bab-el-mandeb','Bab el-Mandeb Strait','Bab el-Mandeb','INT','Yemen / Djibouti','Middle East & Africa','International Monetary Fund — PortWatch','chokepoint','unknown','Awaiting traffic check','AIS-derived vessel traffic from IMF PortWatch. The metric is lagged and does not by itself establish whether passage is legally or physically closed.','derived_traffic','derived','Africa/Djibouti','https://portwatch.imf.org/',NULL,NULL,20160),
+('int-malacca','Strait of Malacca','Malacca','INT','Malaysia / Singapore / Indonesia','Asia-Pacific','International Monetary Fund — PortWatch','chokepoint','unknown','Awaiting traffic check','AIS-derived vessel traffic from IMF PortWatch. The metric is lagged and does not by itself establish passage availability.','derived_traffic','derived','Asia/Singapore','https://portwatch.imf.org/',NULL,NULL,20160),
+('int-hormuz','Strait of Hormuz','Hormuz','INT','Iran / Oman','Middle East & Africa','International Monetary Fund — PortWatch','chokepoint','unknown','Awaiting traffic check','AIS-derived vessel traffic from IMF PortWatch. AIS gaps, spoofing and vessels going dark can affect interpretation during conflict.','derived_traffic','derived','Asia/Muscat','https://portwatch.imf.org/',NULL,NULL,20160),
+('za-cape-good-hope','Cape of Good Hope','Cape of Good Hope','ZA','South Africa','Middle East & Africa','International Monetary Fund — PortWatch','chokepoint','unknown','Awaiting traffic check','AIS-derived vessel traffic from IMF PortWatch. Elevated traffic can indicate rerouting around other passages.','derived_traffic','derived','Africa/Johannesburg','https://portwatch.imf.org/',NULL,NULL,20160)
+ON CONFLICT (id) DO UPDATE SET authority=EXCLUDED.authority,official_url=EXCLUDED.official_url,signal_basis=EXCLUDED.signal_basis,confidence=EXCLUDED.confidence,freshness_minutes=EXCLUDED.freshness_minutes;
+
+INSERT INTO sources (id,system_id,name,url,adapter,source_tier,poll_interval_minutes,parser_version,monitoring_mode) VALUES
+('imf-pw-suez','eg-suez-canal','IMF PortWatch — Suez Canal','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint1%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-panama','pa-panama-canal','IMF PortWatch — Panama Canal','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint2%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-bosphorus','tr-turkish-straits','IMF PortWatch — Bosporus Strait','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint3%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-bab-el-mandeb','int-bab-el-mandeb','IMF PortWatch — Bab el-Mandeb Strait','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint4%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-malacca','int-malacca','IMF PortWatch — Strait of Malacca','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint5%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-hormuz','int-hormuz','IMF PortWatch — Strait of Hormuz','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint6%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations'),
+('imf-pw-cape-good-hope','za-cape-good-hope','IMF PortWatch — Cape of Good Hope','https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query?where=portid%3D%27chokepoint7%27%20AND%20date%3E%3DDATE%20%272025-01-01%27&outFields=date,portid,portname,n_total,n_tanker,n_cargo,capacity&orderByFields=date%20ASC&resultRecordCount=1000&f=json','portwatch_chokepoint',1,360,'2','operations')
+ON CONFLICT (id) DO UPDATE SET system_id=EXCLUDED.system_id,url=EXCLUDED.url,adapter=EXCLUDED.adapter,parser_version=EXCLUDED.parser_version,monitoring_mode=EXCLUDED.monitoring_mode,poll_interval_minutes=EXCLUDED.poll_interval_minutes;
