@@ -40,6 +40,37 @@ function normalizeSystem(row: any) {
   };
 }
 
+function expandRecurringEvents(events: any[], now: Date) {
+  const floor = now.getTime() - 21 * 86400000;
+  const ceiling = now.getTime() + 60 * 86400000;
+  const output: any[] = [];
+
+  for (const event of events) {
+    if (event.recurrence !== "FREQ=WEEKLY;BYDAY=SU") {
+      output.push(event);
+      continue;
+    }
+
+    const baseStart = new Date(event.starts_at).getTime();
+    const duration = event.ends_at ? new Date(event.ends_at).getTime() - baseStart : 0;
+    for (let start = baseStart, n = 0; start <= ceiling; start += 7 * 86400000, n += 1) {
+      const end = duration ? start + duration : null;
+      if ((end || start) < floor) continue;
+      output.push({
+        ...event,
+        id: `${event.id}-r${n}`,
+        starts_at: new Date(start).toISOString(),
+        ends_at: end ? new Date(end).toISOString() : null,
+        resolved_at: null,
+        recurrence: null,
+        recurrence_source: event.id
+      });
+    }
+  }
+
+  return output;
+}
+
 function deriveSystemStatus(system: any, events: any[], now: Date) {
   const checked = system.last_checked_at ? new Date(system.last_checked_at).getTime() : 0;
   const freshnessMs = Number(system.freshness_minutes || 1440) * 60000;
@@ -86,11 +117,12 @@ export async function loadDashboard() {
     const [systemsRows, eventRows, sourceRows] = await Promise.all([
       db.sql`SELECT * FROM systems WHERE active = TRUE ORDER BY region, country_name, name`,
       db.sql`SELECT * FROM events WHERE starts_at >= NOW() - INTERVAL '21 days' OR resolved_at IS NULL ORDER BY starts_at ASC`,
-      db.sql`SELECT id, system_id, name, url, source_tier, poll_interval_minutes, last_checked_at, last_success_at, failure_count, health, last_error FROM sources ORDER BY source_tier, name`
+      db.sql`SELECT id, system_id, name, url, source_tier, poll_interval_minutes, parser_version, monitoring_mode, last_checked_at, last_success_at, failure_count, health, last_error FROM sources ORDER BY source_tier, name`
     ]);
 
     if (!systemsRows.length) throw new Error("Database contains no systems");
-    const events = eventRows.map((row: any) => normalizeEvent(row, now));
+    const events = expandRecurringEvents(eventRows.map((row: any) => normalizeEvent(row, now)), now)
+      .map((event: any) => ({ ...event, status: lifecycle(event, now) }));
     const systems = systemsRows.map(normalizeSystem).map((s: any) => deriveSystemStatus(s, events, now));
     const sources = sourceRows.map((row: any) => ({
       ...row,
@@ -116,7 +148,8 @@ export async function loadDashboard() {
       sources
     };
   } catch (error) {
-    const events = fallbackData.events.map((event: any) => normalizeEvent({ ...event }, now));
+    const events = expandRecurringEvents(fallbackData.events.map((event: any) => normalizeEvent({ ...event }, now)), now)
+      .map((event: any) => ({ ...event, status: lifecycle(event, now) }));
     const systems = fallbackData.systems.map((system: any) => deriveSystemStatus({ ...system }, events, now));
     return {
       ...fallbackData,
