@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Source Health — TradeStatus</title>
+  <meta name="description" content="Operational health of TradeStatus source monitors." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .health-shell{max-width:1180px;margin:0 auto;padding:48px 24px 80px}.health-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:28px}.health-head h1{margin:.2rem 0 0}.health-meta{color:var(--muted,#637083);font-size:.9rem}.health-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:24px 0 28px}.health-stat{border:1px solid var(--line,#dce1e6);background:white;border-radius:12px;padding:18px}.health-stat strong{font-size:1.7rem;display:block}.health-table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--line,#dce1e6);border-radius:14px;overflow:hidden}.health-table th,.health-table td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line,#e4e7ea);vertical-align:top}.health-table th{font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:#65707d}.health-pill{display:inline-flex;align-items:center;gap:7px;font-weight:700;text-transform:capitalize}.health-dot{width:9px;height:9px;border-radius:50%;background:#9aa3ad}.health-pill[data-health="healthy"] .health-dot{background:#16835d}.health-pill[data-health="degraded"] .health-dot,.health-pill[data-health="stale"] .health-dot{background:#cf8b14}.health-pill[data-health="failing"] .health-dot{background:#c73b3b}.health-note{max-width:740px;color:#637083;margin:0 0 24px}.health-error{padding:18px;border:1px solid #efc2c2;background:#fff5f5;border-radius:12px}@media(max-width:800px){.health-grid{grid-template-columns:repeat(2,1fr)}.health-table{font-size:.85rem}.health-table th:nth-child(3),.health-table td:nth-child(3),.health-table th:nth-child(4),.health-table td:nth-child(4){display:none}.health-head{align-items:start;flex-direction:column}}
+  </style>
+</head>
+<body>
+<header class="site-header"><div class="shell nav"><a href="/" class="brand"><span class="brand-mark">TS</span><span>TradeStatus</span></a><div class="nav-actions"><a class="nav-link" href="/">Status board</a></div></div></header>
+<main class="health-shell">
+  <div class="section-kicker">Operations</div>
+  <div class="health-head"><div><h1>Source health</h1><p class="health-note">This page monitors the monitors. A source becomes stale when it has not produced a successful check within three expected polling intervals.</p></div><div id="updated" class="health-meta">Loading…</div></div>
+  <div id="summary" class="health-grid"></div>
+  <div id="content"></div>
+</main>
+<script>
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const age=m=>m==null?'Never':m<60?`${m}m ago`:m<1440?`${Math.floor(m/60)}h ago`:`${Math.floor(m/1440)}d ago`;
+async function load(){
+  try{
+    const r=await fetch('/api/health',{cache:'no-store'}); const d=await r.json();
+    document.getElementById('updated').textContent=`Generated ${new Date(d.generated_at).toLocaleString()}`;
+    const vals=[['Healthy',d.summary.healthy],['Degraded',d.summary.degraded],['Stale',d.summary.stale],['Failing',d.summary.failing],['Total',d.summary.total]];
+    document.getElementById('summary').innerHTML=vals.map(([k,v])=>`<div class="health-stat"><strong>${v}</strong><span>${k}</span></div>`).join('');
+    if(!r.ok) throw new Error(d.diagnostic||d.error||'Health feed unavailable');
+    document.getElementById('content').innerHTML=`<div style="overflow:auto"><table class="health-table"><thead><tr><th>Source</th><th>Health</th><th>System</th><th>Monitor</th><th>Last success</th><th>Failures</th></tr></thead><tbody>${d.sources.map(s=>`<tr><td><a href="${esc(s.url)}" target="_blank" rel="noopener"><strong>${esc(s.name)}</strong></a><br><small>${esc(s.country_name)} · Tier ${s.source_tier}</small></td><td><span class="health-pill" data-health="${esc(s.effective_health)}"><i class="health-dot"></i>${esc(s.effective_health)}</span>${s.last_error?`<br><small>${esc(s.last_error)}</small>`:''}</td><td>${esc(s.system_name)}</td><td>${esc(s.monitoring_mode||"—")}<br><small>parser v${esc(s.parser_version||"1")}</small></td><td>${age(s.age_minutes)}<br><small>Every ${s.poll_interval_minutes}m</small></td><td>${s.failure_count}</td></tr>`).join('')}</tbody></table></div>`;
+  }catch(e){document.getElementById('content').innerHTML=`<div class="health-error"><strong>Health feed unavailable.</strong><br>${esc(e.message)}</div>`}
+}
+load(); setInterval(load,60000);
+</script>
+</body></html>
