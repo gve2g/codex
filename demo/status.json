@@ -1,0 +1,1 @@
+{"note":"TradeStatus demo uses a self-contained snapshot of the launch data audited on 2026-09-10. The production build at repository root uses Netlify functions, Postgres and scheduled source polling."}
