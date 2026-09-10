@@ -2,7 +2,7 @@ window.TS = (() => {
   const state = { data: null, filter: "all" };
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => [...document.querySelectorAll(sel)];
-  const FLAGS = { GB: "🇬🇧", SG: "🇸🇬", DE: "🇩🇪", AU: "🇦🇺", IE: "🇮🇪", NL: "🇳🇱", BE: "🇧🇪", US: "🇺🇸", JP: "🇯🇵", KR: "🇰🇷", IN: "🇮🇳", PA: "🇵🇦", BR: "🇧🇷", ZA: "🇿🇦" };
+  const FLAGS = { GB: "🇬🇧", SG: "🇸🇬", DE: "🇩🇪", AU: "🇦🇺", IE: "🇮🇪", NL: "🇳🇱", BE: "🇧🇪", US: "🇺🇸", JP: "🇯🇵", KR: "🇰🇷", IN: "🇮🇳", PA: "🇵🇦", BR: "🇧🇷", ZA: "🇿🇦", NZ: "🇳🇿", FR: "🇫🇷", HK: "🇭🇰" };
   const SEVERITY_ORDER = { major: 4, moderate: 3, limited: 2, info: 1 };
   const SIGNAL_LABELS = {
     official_status: "Live status", published_schedule: "Published schedule",
