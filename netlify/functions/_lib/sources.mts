@@ -35,4 +35,9 @@ export const REGIONAL_SOURCES: SourceDefinition[] = [
   { id: "hk-tsw-home", system: "hk-tsw", adapter: "hk_tsw", url: "https://www5.tradesinglewindow.hk/portal/?lang=en", pollMinutes: 30, parserVersion: "1", monitoringMode: "bulletin" }
 ];
 
-export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES];
+export const ASIA_SOURCES: SourceDefinition[] = [
+  { id: "tw-customs-news", system: "tw-customs-clearance", adapter: "tw_customs", url: "https://web.customs.gov.tw/multiplehtml/2222", pollMinutes: 30, parserVersion: "1", monitoringMode: "bulletin" },
+  { id: "ph-boc-e2m", system: "ph-e2m", adapter: "ph_e2m", url: "https://customs.gov.ph/memoranda-2026/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" }
+];
+
+export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES, ...ASIA_SOURCES];
