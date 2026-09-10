@@ -4,7 +4,7 @@ TradeStatus is a free public monitor for global trade infrastructure: customs sy
 
 ## Current V0.2 scope
 
-- 14 economies / 15 monitored systems in the fallback launch dataset
+- 17 economies / 18 monitored systems in the fallback launch dataset
 - Explicit distinction between live heartbeat, bulletin, schedule, operations and secondary sources
 - Per-source polling cadence, parser version and stale-source detection
 - Current incident board and 7/30-day forward calendar
@@ -36,6 +36,9 @@ TradeStatus never interprets silence as proof of availability. `Operational` is 
 - India ICEGATE latest updates
 - Brazil Portal Único Siscomex notices
 - South Africa SARS Customs Digital Platform maintenance
+- New Zealand Trade Single Window live status and maintenance
+- France DELTA IE import anomaly journal
+- Hong Kong Trade Single Window system notices
 - Panama Canal advisories to shipping
 - Belgium iDMS/CERTEX via a secondary operational-status source
 
