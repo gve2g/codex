@@ -2,14 +2,14 @@ window.TS = (() => {
   const state = { data: null, filter: "all" };
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => [...document.querySelectorAll(sel)];
-  const FLAGS = { GB: "🇬🇧", SG: "🇸🇬", DE: "🇩🇪", AU: "🇦🇺", IE: "🇮🇪", NL: "🇳🇱", BE: "🇧🇪" };
+  const FLAGS = { GB: "🇬🇧", SG: "🇸🇬", DE: "🇩🇪", AU: "🇦🇺", IE: "🇮🇪", NL: "🇳🇱", BE: "🇧🇪", US: "🇺🇸", JP: "🇯🇵", KR: "🇰🇷", IN: "🇮🇳", PA: "🇵🇦" };
   const SEVERITY_ORDER = { major: 4, moderate: 3, limited: 2, info: 1 };
   const SIGNAL_LABELS = {
     official_status: "Live status", published_schedule: "Published schedule",
     official_notice: "Official notice", official_bulletin: "Official bulletin",
     official_operations: "Operations feed", secondary_status: "Secondary status"
   };
-  const TYPE_LABELS = { customs: "Customs", port: "Port", biosecurity: "Biosecurity" };
+  const TYPE_LABELS = { customs: "Customs", port: "Port", canal: "Canal", biosecurity: "Biosecurity" };
 
   function lifecycle(event, now = new Date()) {
     if (event.resolved_at) return "resolved";
@@ -70,7 +70,7 @@ window.TS = (() => {
     return new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(new Date(iso));
   }
   function labelEventType(type) {
-    const labels = { system_incident: "System incident", port_constraint: "Port constraint", scheduled_maintenance: "Maintenance", system_cutover: "System change" };
+    const labels = { system_incident: "System incident", port_constraint: "Port constraint", scheduled_maintenance: "Maintenance", system_cutover: "System change", canal_constraint: "Canal constraint" };
     return labels[type] || type.replaceAll("_", " ");
   }
   function deriveSystem(system, events) {
