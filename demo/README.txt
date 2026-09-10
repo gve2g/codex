@@ -1,0 +1,1 @@
+TradeStatus demo is self-contained in demo/index.html. Production code lives at the repository root and deploys to Netlify with the included netlify.toml, functions and database migration.
