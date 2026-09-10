@@ -4,7 +4,11 @@ window.TS = (() => {
   const $$ = (sel) => [...document.querySelectorAll(sel)];
   const FLAGS = { GB: "🇬🇧", SG: "🇸🇬", DE: "🇩🇪", AU: "🇦🇺", IE: "🇮🇪", NL: "🇳🇱", BE: "🇧🇪", US: "🇺🇸", JP: "🇯🇵", KR: "🇰🇷", IN: "🇮🇳", PA: "🇵🇦", CA: "🇨🇦", BR: "🇧🇷", ZA: "🇿🇦", NZ: "🇳🇿", FR: "🇫🇷", HK: "🇭🇰", TW: "🇹🇼", PH: "🇵🇭" };
   const SEVERITY_ORDER = { major: 4, moderate: 3, limited: 2, info: 1 };
-  const SIGNAL_LABELS = { official_status: "Live status", published_schedule: "Published schedule", official_notice: "Official notice", official_bulletin: "Official bulletin", official_operations: "Operations feed", secondary_status: "Secondary status" };
+  const SIGNAL_LABELS = {
+    official_status: "Live status", published_schedule: "Published schedule",
+    official_notice: "Official notice", official_bulletin: "Official bulletin",
+    official_operations: "Operations feed", secondary_status: "Secondary status"
+  };
   const TYPE_LABELS = { customs: "Customs", port: "Port", canal: "Canal", biosecurity: "Biosecurity" };
 
   function lifecycle(event, now = new Date()) {
@@ -46,7 +50,9 @@ window.TS = (() => {
   }
   function shortDate(iso, allDay = false) {
     const d = new Date(iso);
-    return new Intl.DateTimeFormat("en", allDay ? { month: "short", day: "numeric", year: d.getUTCFullYear() !== new Date().getUTCFullYear() ? "numeric" : undefined, timeZone: "UTC" } : { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(d);
+    return new Intl.DateTimeFormat("en", allDay ? {
+      month: "short", day: "numeric", year: d.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined, timeZone: "UTC"
+    } : { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(d);
   }
   function localRange(event) {
     if (event.all_day) return shortDate(event.starts_at, true);
@@ -55,19 +61,26 @@ window.TS = (() => {
     const end = new Date(event.ends_at);
     const startDate = new Date(event.starts_at);
     const sameDay = startDate.toLocaleDateString() === end.toLocaleDateString();
-    const endText = new Intl.DateTimeFormat("en", sameDay ? { hour: "numeric", minute: "2-digit" } : { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(end);
+    const endText = new Intl.DateTimeFormat("en", sameDay ? { hour: "numeric", minute: "2-digit" } : {
+      month: "short", day: "numeric", hour: "numeric", minute: "2-digit"
+    }).format(end);
     return `${start} – ${endText}`;
   }
-  function formatTime(iso) { return new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(new Date(iso)); }
+  function formatTime(iso) {
+    return new Intl.DateTimeFormat("en", { hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(new Date(iso));
+  }
   function labelEventType(type) {
-    const labels = { system_incident: "System incident", port_constraint: "Port constraint", scheduled_maintenance: "Maintenance", scheduled_maintenance_notice: "Maintenance notice", system_cutover: "System change", canal_constraint: "Canal constraint" };
+    const labels = { system_incident: "System incident", port_constraint: "Port constraint", scheduled_maintenance: "Maintenance", system_cutover: "System change", canal_constraint: "Canal constraint" };
     return labels[type] || type.replaceAll("_", " ");
   }
   function deriveSystem(system, events) {
     const checked = system.last_checked_at ? new Date(system.last_checked_at).getTime() : 0;
     const freshnessMs = Number(system.freshness_minutes || 1440) * 60000;
-    if (!checked || Date.now() - checked > freshnessMs) return { ...system, status: "unknown", status_label: "Status unavailable", status_detail: "The monitored source is stale or has not been checked within its freshness window." };
-    const active = events.filter((e) => e.system_id === system.id && e.severity !== "info" && e.status === "active" && (!e.last_verified_at || Date.now() - new Date(e.last_verified_at).getTime() <= freshnessMs)).sort((a,b) => (SEVERITY_ORDER[b.severity] || 0) - (SEVERITY_ORDER[a.severity] || 0));
+    if (!checked || Date.now() - checked > freshnessMs) {
+      return { ...system, status: "unknown", status_label: "Status unavailable", status_detail: "The monitored source is stale or has not been checked within its freshness window." };
+    }
+    const active = events.filter((e) => e.system_id === system.id && e.severity !== "info" && e.status === "active" && (!e.last_verified_at || Date.now() - new Date(e.last_verified_at).getTime() <= freshnessMs))
+      .sort((a,b) => (SEVERITY_ORDER[b.severity] || 0) - (SEVERITY_ORDER[a.severity] || 0));
     if (!active.length) return system;
     const top = active[0];
     if (top.event_type === "scheduled_maintenance") return { ...system, status: "maintenance", status_label: "Maintenance", status_detail: top.summary };
@@ -75,7 +88,7 @@ window.TS = (() => {
     return { ...system, status: "degraded", status_label: system.status === "degraded" ? system.status_label : "Operational constraint", status_detail: top.summary };
   }
   function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
-  function escapeHtml(value="") { return String(value).replace(/[&<>'"]/g, (c) => ({"&":"&amp;","<":"&lt;","">":"&gt;","'":"&#39;",'"':"&quot;"}[c])); }
+  function escapeHtml(value="") { return String(value).replace(/[&<>'"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])); }
   function safeUrl(url) { try { const u = new URL(url); return ["http:","https:"].includes(u.protocol) ? u.href : "#"; } catch { return "#"; } }
 
   return { state, $, $$, FLAGS, SEVERITY_ORDER, SIGNAL_LABELS, TYPE_LABELS, lifecycle, expandRecurring, displayEvents, ago, shortDate, localRange, formatTime, labelEventType, deriveSystem, capitalize, escapeHtml, safeUrl };
