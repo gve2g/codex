@@ -34,11 +34,15 @@
       const res = await fetch("/data/fallback.json", { cache: "no-store" });
       const base = await res.json();
       let expansion = { systems: [], events: [], sources: [] };
+      let asia = { systems: [], events: [], sources: [] };
+      let calendar = { systems: [], events: [], sources: [] };
       try { const extra = await fetch("/data/expansion.json", { cache: "no-store" }); if (extra.ok) expansion = await extra.json(); } catch {}
+      try { const extra = await fetch("/data/asia-expansion.json", { cache: "no-store" }); if (extra.ok) asia = await extra.json(); } catch {}
+      try { const extra = await fetch("/data/calendar-expansion.json", { cache: "no-store" }); if (extra.ok) calendar = await extra.json(); } catch {}
       const merge = (a, b) => [...new Map([...a, ...b].map((item) => [item.id, item])).values()];
-      const systems = merge(base.systems || [], expansion.systems || []);
-      const events = merge(base.events || [], expansion.events || []);
-      const sources = merge(base.sources || [], expansion.sources || []);
+      const systems = merge(merge(merge(base.systems || [], expansion.systems || []), asia.systems || []), calendar.systems || []);
+      const events = merge(merge(merge(base.events || [], expansion.events || []), asia.events || []), calendar.events || []);
+      const sources = merge(merge(merge(base.sources || [], expansion.sources || []), asia.sources || []), calendar.sources || []);
       data = { ...base, systems, events, sources, coverage: { economies: new Set(systems.map((s) => s.country_code)).size, systems: systems.length, sources: sources.length }, mode: "launch_dataset" };
     }
     state.data = data; T.render();
