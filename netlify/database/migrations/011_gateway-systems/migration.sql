@@ -1,0 +1,9 @@
+INSERT INTO systems (id,name,short_name,country_code,country_name,region,authority,system_type,status,status_label,status_detail,signal_basis,confidence,timezone,official_url,last_checked_at,last_changed_at,freshness_minutes) VALUES
+('mx-vucem','Ventanilla Única de Comercio Exterior Mexicana','VUCEM','MX','Mexico','Americas','Ventanilla Única / SAT','customs','unknown','Awaiting live check','The official VUCEM information-sheet index is monitored for maintenance, contingency and restoration notices.','official_bulletin','official','America/Mexico_City','https://www.ventanillaunica.gob.mx/vucem/hojasinformativas.html',NULL,NULL,1440),
+('eu-ics2','Import Control System 2','ICS2','EU','European Union','Europe','European Commission — DG TAXUD','customs','unknown','Awaiting live check','The European Commission ICS2 page is monitored for central incident and unavailability notices. It is not a component-level heartbeat.','official_bulletin','official','Europe/Brussels','https://taxation-customs.ec.europa.eu/customs/customs-security/import-control-system-2_en',NULL,NULL,2880)
+ON CONFLICT (id) DO UPDATE SET authority=EXCLUDED.authority,official_url=EXCLUDED.official_url,signal_basis=EXCLUDED.signal_basis,confidence=EXCLUDED.confidence,freshness_minutes=EXCLUDED.freshness_minutes;
+
+INSERT INTO sources (id,system_id,name,url,adapter,source_tier,poll_interval_minutes,parser_version,monitoring_mode) VALUES
+('mx-vucem-notices','mx-vucem','VUCEM information sheets','https://www.ventanillaunica.gob.mx/vucem/hojasinformativas.html','mx_vucem',1,60,'1','bulletin'),
+('eu-ics2-news','eu-ics2','European Commission ICS2','https://taxation-customs.ec.europa.eu/customs/customs-security/import-control-system-2_en','eu_ics2',1,120,'1','bulletin')
+ON CONFLICT (id) DO UPDATE SET url=EXCLUDED.url,adapter=EXCLUDED.adapter,parser_version=EXCLUDED.parser_version,monitoring_mode=EXCLUDED.monitoring_mode,poll_interval_minutes=EXCLUDED.poll_interval_minutes;
