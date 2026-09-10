@@ -30,7 +30,17 @@
   async function load() {
     setupControls(); let data;
     try { const res = await fetch("/api/status", { cache: "no-store" }); if (!res.ok) throw new Error(`API ${res.status}`); data = await res.json(); }
-    catch { const res = await fetch("/data/fallback.json", { cache: "no-store" }); data = await res.json(); data.mode = "launch_dataset"; }
+    catch {
+      const res = await fetch("/data/fallback.json", { cache: "no-store" });
+      const base = await res.json();
+      let expansion = { systems: [], events: [], sources: [] };
+      try { const extra = await fetch("/data/expansion.json", { cache: "no-store" }); if (extra.ok) expansion = await extra.json(); } catch {}
+      const merge = (a, b) => [...new Map([...a, ...b].map((item) => [item.id, item])).values()];
+      const systems = merge(base.systems || [], expansion.systems || []);
+      const events = merge(base.events || [], expansion.events || []);
+      const sources = merge(base.sources || [], expansion.sources || []);
+      data = { ...base, systems, events, sources, coverage: { economies: new Set(systems.map((s) => s.country_code)).size, systems: systems.length, sources: sources.length }, mode: "launch_dataset" };
+    }
     state.data = data; T.render();
   }
   load().catch((error) => { console.error(error); $("#freshness").textContent = "TradeStatus could not load its data feed."; $("#activeEvents").innerHTML = `<div class="empty-state">Data feed unavailable. Please use the linked authority sources for operational decisions.</div>`; });
