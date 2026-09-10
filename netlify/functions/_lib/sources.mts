@@ -40,4 +40,8 @@ export const ASIA_SOURCES: SourceDefinition[] = [
   { id: "ph-boc-e2m", system: "ph-e2m", adapter: "ph_e2m", url: "https://customs.gov.ph/memoranda-2026/", pollMinutes: 60, parserVersion: "1", monitoringMode: "bulletin" }
 ];
 
-export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES, ...ASIA_SOURCES];
+export const CALENDAR_SOURCES: SourceDefinition[] = [
+  { id: "ca-cbsa-scheduled", system: "ca-cbsa-commercial", adapter: "ca_cbsa_schedule", url: "https://www.canada.ca/en/border-services-agency/services/electronic-data-interchange/edi-resources-technical-support/scheduled-outages.html", pollMinutes: 360, parserVersion: "1", monitoringMode: "schedule" }
+];
+
+export const ALL_SOURCES: SourceDefinition[] = [...SOURCES, ...BULLETIN_SOURCES, ...REGIONAL_SOURCES, ...ASIA_SOURCES, ...CALENDAR_SOURCES];
